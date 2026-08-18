@@ -63,9 +63,13 @@ def call(Map inputs){
         expression { params.Deploy == true }
        }
        steps{
-        sh"""
-         echo "Deploying"
-        """
+         build job: '../catalogue-deploy', 
+         wait: false,  // wait for completion
+         propagate: false,  // Propogate status
+         parameters: [ 
+            string(name: 'appVersion', value: "${appVersion}"),
+            sring(name: 'deploy_to', value: "dev")
+         ]
        }
      }
     }
