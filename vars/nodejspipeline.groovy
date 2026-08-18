@@ -60,7 +60,7 @@ def call(Map inputs){
      }
      stage('Trigger Dev Deploy'){
        when{
-        expression { params.Deploy == "true" }
+        expression { params.Deploy == true }
        }
        steps{
         sh"""
