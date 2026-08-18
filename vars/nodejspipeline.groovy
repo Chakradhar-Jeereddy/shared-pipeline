@@ -13,7 +13,7 @@ def call(Map inputs){
            booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
     }
     environment{
-      apiVersion = ""
+      appVersion = ""
       acc_id = "406682759639"
       project = inputs.get("project")
       component = inputs.get("component")
@@ -28,8 +28,8 @@ def call(Map inputs){
        steps{
         script{
          def packagejson = readJSON file: "package.json"
-         apiVersion = packagejson.version
-         echo "apiversion: ${apiVersion}"
+         appVersion = packagejson.version
+         echo "appVersion: ${appVersion}"
         }
        }
      }
@@ -52,8 +52,8 @@ def call(Map inputs){
          withAWS(region:'us-east-1',credentials:'aws-auth') {
           sh"""
            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${acc_id}.dkr.ecr.us-east-1.amazonaws.com
-           docker build -t ${acc_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${component}:${apiVersion} .
-           docker push ${acc_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${component}:${apiVersion}
+           docker build -t ${acc_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${component}:${appVersion} .
+           docker push ${acc_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${component}:${appVersion}
           """
          }
        }
