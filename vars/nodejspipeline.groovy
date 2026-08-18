@@ -68,7 +68,7 @@ def call(Map inputs){
          propagate: false,  // Propogate status
          parameters: [ 
             string(name: 'appVersion', value: "${appVersion}"),
-            sring(name: 'deploy_to', value: "dev")
+            string(name: 'deploy_to', value: "dev")
          ]
        }
      }
