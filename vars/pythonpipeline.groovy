@@ -27,8 +27,7 @@ def call(Map inputs){
      stage('Read Version'){
        steps{
         script{
-         def fileContent = readFile 'version'
-         appVersion = fileContent.version
+         appVersion = readFile(file: 'version')
          echo "appVersion: ${appVersion}"
         }
        }
