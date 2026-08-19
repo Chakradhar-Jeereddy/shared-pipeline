@@ -63,7 +63,7 @@ def call(Map inputs){
         expression { params.Deploy == true }
        }
        steps{
-         build job: '../catalogue-deploy', 
+         build job: "../${component}-deploy", 
          wait: false,  // wait for completion
          propagate: false,  // Propogate status
          parameters: [ 
