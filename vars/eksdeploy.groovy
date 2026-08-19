@@ -16,15 +16,14 @@ def call(Map inputs){
         PROJECT = inputs.get("project")
         COMPONENT = inputs.get("component")
         deploy_to = inputs.get("deploy_to")
-        REGION = input.get("region")
+        REGION = inputs.get("region")
     }
     options {
         timeout(time: 30, unit: 'MINUTES') 
         disableConcurrentBuilds()
     }
     // This is build section
-    stages {
-        
+    stages {  
         stage('Deploy') {
             steps {
                 script{
@@ -38,7 +37,6 @@ def call(Map inputs){
                 }
             }
         }
-        
     }
     post{
         always{
