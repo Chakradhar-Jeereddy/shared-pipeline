@@ -38,7 +38,7 @@ def call(Map inputs){
                             kubectl get nodes
                             # echo "${deploy_to}, ${appVersion}"
                             sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
-                            helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --rollback-on-failure --wait --timeout=5m
+                            helm upgrade --install ${component} . -f values-${deploy_to}.yaml -n ${project} --rollback-on-failure --wait --timeout=5m
                         """
                     }
                 }
