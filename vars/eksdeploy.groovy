@@ -28,10 +28,17 @@ def call(Map inputs){
             steps {
                 script{
                     withAWS(region:'us-east-1',credentials:'aws-auth') {
+                        // wait(readyness check) - checks if pod is ready, deployment reached the desired count, pv mounted, service got IP.
+                        // timeout (helm marks the release as filed if readyness check wont respond in time)
+                        // atomic, rollback the release if it fails.
+                        // set -e (exit script immediately if command fails)
                         sh """
+                            set -e
                             aws eks update-kubeconfig --region ${REGION} --name ${PROJECT}-${deploy_to}
                             kubectl get nodes
-                            echo "${deploy_to}, ${appVersion}"
+                            # echo "${deploy_to}, ${appVersion}"
+                            sed -i "s/IMAGE_VERSION/${appVersion}/g" values.yaml
+                            helm upgrade --install ${component} -f values-${deploy_to}.yaml -n ${project} --atomic --wait --timeout=5m
                         """
                     }
                 }
