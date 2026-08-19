@@ -45,11 +45,11 @@ def call(Map inputs){
             }
         }
         stage('Funtional Testing'){
+            when{
+                expression { deploy_to == "dev" }
+            }
             steps{
                 script{
-                    when{
-                        expression { deploy_to == "dev"}
-                    }
                     sh"""
                         echo "functional test in dev environment"
                     """
