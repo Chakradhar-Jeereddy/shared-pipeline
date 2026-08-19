@@ -41,6 +41,18 @@ def call(Map inputs){
                             helm upgrade --install ${component} . -f values-${deploy_to}.yaml -n ${project} --rollback-on-failure --wait --timeout=5m
                         """
                     }
+                    stage('Funtional Testing'){
+                        steps{
+                            script{
+                                when{
+                                    expression { deploy_to == "dev"}
+                                }
+                                sh """
+                                  echo "functional test in dev environment"
+                                """
+                            }
+                        }
+                    }
                 }
             }
         }
