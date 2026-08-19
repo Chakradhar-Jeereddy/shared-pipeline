@@ -27,8 +27,8 @@ def call(Map inputs){
      stage('Read Version'){
        steps{
         script{
-         def packagejson = readJSON file: "package.json"
-         appVersion = packagejson.version
+         def fileContent = readFile 'path/to/file.txt'
+         appVersion = fileContent.version
          echo "appVersion: ${appVersion}"
         }
        }
@@ -36,7 +36,7 @@ def call(Map inputs){
      stage('Install Dependencies') {
         steps {
           sh """
-             npm install
+             pip3 install -r requirements.txt
           """
         }
      }
